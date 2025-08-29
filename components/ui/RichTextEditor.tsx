@@ -1,5 +1,6 @@
+
 import React, { useRef, useEffect, useState } from 'react';
-import { AlignCenterIcon, AlignLeftIcon, BoldIcon, ImageIcon, UnderlineIcon, VideoIcon } from './Icons';
+import { AlignCenterIcon, AlignLeftIcon, AlignRightIcon, BoldIcon, ImageIcon, UnderlineIcon, VideoIcon } from './Icons';
 import Modal from './Modal';
 import Button from './Button';
 
@@ -78,6 +79,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ value, onChange }) => {
                     <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 mx-2"></div>
                     <ToolbarButton onClick={() => execCmd('justifyLeft')} title="左对齐"><AlignLeftIcon className="w-5 h-5" /></ToolbarButton>
                     <ToolbarButton onClick={() => execCmd('justifyCenter')} title="居中对齐"><AlignCenterIcon className="w-5 h-5" /></ToolbarButton>
+                    <ToolbarButton onClick={() => execCmd('justifyRight')} title="右对齐"><AlignRightIcon className="w-5 h-5" /></ToolbarButton>
                     <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 mx-2"></div>
                     <ToolbarButton onClick={() => openMediaModal('image')} title="插入图片"><ImageIcon className="w-5 h-5" /></ToolbarButton>
                     <ToolbarButton onClick={() => openMediaModal('video')} title="插入视频"><VideoIcon className="w-5 h-5" /></ToolbarButton>
@@ -87,7 +89,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ value, onChange }) => {
                     contentEditable
                     onInput={handleInput}
                     className="p-4 h-64 overflow-y-auto focus:outline-none"
-                    dangerouslySetInnerHTML={{ __html: value }}
                 />
             </div>
 

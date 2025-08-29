@@ -36,3 +36,12 @@ export interface ToastMessage {
     message: string;
     type: 'success' | 'error' | 'info';
 }
+
+export interface LlmConfig {
+  apiUrl: string;
+  apiKey: string;
+  modelName: string;
+  contextLength: number;
+  streamMode: boolean;
+  thinking: boolean;
+}
