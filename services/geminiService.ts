@@ -262,13 +262,21 @@ export const chat = async (
 
 export const generateSimilarQuestions = async (standardQuestion: string): Promise<string[]> => {
     const messages = [
-        { 
-            role: 'system', 
-            content: 'You are a helpful assistant that generates JSON data. Your response must be only the JSON object, with no additional text or explanations.'
+        {
+            role: 'system',
+            content: 'You are a helpful assistant that generates JSON data. Your response must be a single, valid JSON object with no additional text, explanations, or markdown formatting. All double quotes inside any JSON string value must be properly escaped with a backslash (\\").'
         },
         {
             role: 'user',
-            content: `根据标准问题“${standardQuestion}”，生成5个用户可能会问的相似问题。请严格以JSON格式返回，格式为：{"similar_questions": ["问题1", "问题2", "问题3", "问题4", "问题5"]}`
+            content: `根据标准问题“如何退款？”，生成5个用户可能会问的相似问题。`
+        },
+        {
+            role: 'assistant',
+            content: `{"similar_questions":["退款流程是怎样的？","我怎么申请退款？","退款要多久才能到账？","订单可以退款吗？","我想退货退款"]}`
+        },
+        {
+            role: 'user',
+            content: `很好。现在，请根据标准问题“${standardQuestion}”，生成5个用户可能会问的相似问题。`
         }
     ];
 
@@ -289,11 +297,23 @@ export const generateQAPairsFromDoc = async (docContent: string): Promise<{ ques
      const messages = [
         {
             role: 'system',
-            content: 'You are a helpful assistant that analyzes documents and extracts key information as JSON-formatted question-answer pairs. Your response must be only the JSON object, with no additional text or explanations.'
+            content: 'You are a helpful assistant that analyzes documents and extracts key information as JSON-formatted question-answer pairs. Your response must be a single, valid JSON object with no additional text, explanations, or markdown formatting. All double quotes inside any JSON string value must be properly escaped with a backslash (\\").'
         },
         {
             role: 'user',
-            content: `从以下文档中，提取出5个最关键的问答对。问题应该是用户实际可能会问的问题，答案应简洁并直接来源于文档。你必须严格以JSON格式返回，并且只返回JSON对象，不包含任何解释性文字或markdown标记。JSON格式为：{"qa_pairs": [{"question": "问题1", "answer": "答案1"}, {"question": "问题2", "answer": "答案2"}, {"question": "问题3", "answer": "答案3"}, {"question": "问题4", "answer": "答案4"}, {"question": "问题5", "answer": "答案5"}]}. 文档内容如下：\n\n${docContent}`
+            content: `从以下文档中，提取出关键的问答对。
+文档内容: "我们的政策是 "客户至上"。对于有争议的订单，经理会说："我会亲自处理。"。"`
+        },
+        {
+            role: 'assistant',
+            content: `{"qa_pairs":[{"question":"你们公司的政策是什么？","answer":"我们的政策是 \\"客户至上\\"。"},{"question":"经理如何处理争议订单？","answer":"经理会说：\\"我会亲自处理。\\"。"}]}`
+        },
+        {
+            role: 'user',
+            content: `很好。现在，请从以下文档中，提取出5个最关键的问答对。问题应该是用户实际可能会问的问题，答案应简洁并直接来源于文档。
+文档内容如下：
+
+${docContent}`
         }
     ];
 
