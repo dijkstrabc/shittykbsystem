@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 export const BrainIcon = ({ className = "h-6 w-6" }) => (
@@ -149,5 +148,45 @@ export const GearIcon = ({ className = "h-6 w-6" }) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.096 2.572-1.065z" />
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+    </svg>
+);
+
+export const ClipboardListIcon = ({ className = "h-6 w-6" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+    </svg>
+);
+
+export const CopyIcon = ({ className = "h-6 w-6" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+    </svg>
+);
+
+export const RobotIcon = ({ className = "h-6 w-6" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 3.782C6.927 4.693 5.485 6.696 5.118 9H3v10h18V9h-2.118c-.367-2.304-1.809-4.307-3.882-5.218" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9V3" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M10 21v-2a2 2 0 114 0v2" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M7 12h.01" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M17 12h.01" />
+    </svg>
+);
+
+export const TagIcon = ({ className = "h-6 w-6" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 6.75l-4.5-4.5-1.628 1.628a9.355 9.355 0 00-3.993 3.993L4.5 9.75l4.5 4.5 1.872-1.872a9.355 9.355 0 003.993-3.993L16.5 6.75z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12l-1.5-1.5" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M18 13.5l-1.5-1.5" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 15l-1.5-1.5" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15 16.5l-1.5-1.5" />
+    </svg>
+);
+
+export const LightbulbIcon = ({ className = "h-6 w-6" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9.5 14.25l.228.228a2.625 2.625 0 003.536-3.536l-.228-.228M9.5 14.25c-.31 0-.615-.123-.837-.345a2.625 2.625 0 01-3.19 4.025l-2.01 2.01a1.5 1.5 0 002.122 2.122l2.01-2.01a2.625 2.625 0 014.025-3.19c.222-.222.345-.527.345-.837zm3.19-4.025a2.625 2.625 0 00-3.536 3.536l.228.228" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 3a9 9 0 110 18 9 9 0 010-18z" />
     </svg>
 );

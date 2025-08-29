@@ -1,15 +1,18 @@
-
 import React, { useState } from 'react';
 import { KnowledgeBaseProvider } from './contexts/KnowledgeBaseContext';
 import KnowledgeList from './components/KnowledgeList';
 import ColdStart from './components/ColdStart';
 import ChatInterface from './components/ChatInterface';
 import SettingsPage from './components/SettingsPage';
-import { BrainIcon, ChatIcon, RocketIcon, GearIcon } from './components/ui/Icons';
+import ConversationLearning from './components/ConversationLearning';
+import RobotManagement from './components/RobotManagement';
+import EntityManagement from './components/EntityManagement';
+import IntentManagement from './components/IntentManagement';
+import { BrainIcon, ChatIcon, RocketIcon, GearIcon, ClipboardListIcon, RobotIcon, TagIcon, LightbulbIcon } from './components/ui/Icons';
 import { ToastProvider } from './contexts/ToastContext';
 import ToastContainer from './components/ui/Toast';
 
-type View = 'knowledge_base' | 'cold_start' | 'chat' | 'settings';
+type View = 'knowledge_base' | 'cold_start' | 'chat' | 'settings' | 'conversation_learning' | 'robot_management' | 'entity_management' | 'intent_management';
 
 const App: React.FC = () => {
     const [view, setView] = useState<View>('knowledge_base');
@@ -37,8 +40,16 @@ const App: React.FC = () => {
                 return <KnowledgeList />;
             case 'cold_start':
                 return <ColdStart />;
+            case 'entity_management':
+                return <EntityManagement />;
+            case 'intent_management':
+                return <IntentManagement />;
             case 'chat':
                 return <ChatInterface />;
+            case 'conversation_learning':
+                return <ConversationLearning />;
+            case 'robot_management':
+                return <RobotManagement />;
             case 'settings':
                 return <SettingsPage />;
             default:
@@ -59,11 +70,23 @@ const App: React.FC = () => {
                             <NavItem currentView={view} targetView="knowledge_base" icon={<BrainIcon className="h-5 w-5" />} onClick={setView}>
                                 知识库
                             </NavItem>
+                            <NavItem currentView={view} targetView="entity_management" icon={<TagIcon className="h-5 w-5" />} onClick={setView}>
+                                实体管理
+                            </NavItem>
+                             <NavItem currentView={view} targetView="intent_management" icon={<LightbulbIcon className="h-5 w-5" />} onClick={setView}>
+                                意图管理
+                            </NavItem>
+                             <NavItem currentView={view} targetView="conversation_learning" icon={<ClipboardListIcon className="h-5 w-5" />} onClick={setView}>
+                                会话学习
+                            </NavItem>
                             <NavItem currentView={view} targetView="cold_start" icon={<RocketIcon className="h-5 w-5" />} onClick={setView}>
                                 冷启动
                             </NavItem>
                             <NavItem currentView={view} targetView="chat" icon={<ChatIcon className="h-5 w-5" />} onClick={setView}>
                                 聊天机器人
+                            </NavItem>
+                            <NavItem currentView={view} targetView="robot_management" icon={<RobotIcon className="h-5 w-5" />} onClick={setView}>
+                                机器人管理
                             </NavItem>
                              <NavItem currentView={view} targetView="settings" icon={<GearIcon className="h-5 w-5" />} onClick={setView}>
                                 设置

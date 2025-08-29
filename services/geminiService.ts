@@ -3,8 +3,8 @@ import type { LlmConfig } from '../types';
 const DEFAULT_LLM_CONFIG: LlmConfig = {
   apiUrl: 'https://open.bigmodel.cn/api/paas/v4/chat/completions',
   apiKey: '',
-  modelName: 'glm-4.5',
-  contextLength: 4096,
+  modelName: 'glm-4.5-x',
+  contextLength: 32768,
   streamMode: true,
   thinking: false,
 };
@@ -36,6 +36,20 @@ export const setLlmConfig = (config: Partial<LlmConfig>) => {
     localStorage.setItem('llm_config', JSON.stringify(newConfig));
 };
 
+/**
+ * Validates that header values do not contain invalid characters.
+ * @param config The LLM configuration containing values used in headers.
+ * @throws An error if validation fails.
+ */
+function validateHeaders(config: LlmConfig) {
+    // This regex checks for any characters outside the Latin-1 Supplement block (U+0000 to U+00FF),
+    // which is what `fetch` headers are restricted to.
+    const nonLatin1Regex = /[^\u0000-\u00ff]/;
+    if (nonLatin1Regex.test(config.apiKey)) {
+        throw new Error('API Key 包含无效字符 (例如中文或全角符号)。请检查并修正您的 API Key。');
+    }
+}
+
 
 /**
  * Creates a standardized error for API failures, providing user-friendly advice.
@@ -63,6 +77,7 @@ function handleApiError(error: unknown): Error {
 async function callChatCompletions(messages: { role: string; content: string }[]): Promise<any> {
     const config = getLlmConfig();
     try {
+        validateHeaders(config); // Validate before making the request
         const body: Record<string, any> = {
             model: config.modelName,
             messages: messages,
@@ -95,7 +110,12 @@ async function callChatCompletions(messages: { role: string; content: string }[]
         
         // The response might be a JSON string that needs parsing.
         try {
-             return JSON.parse(content);
+            // Attempt to clean up the response before parsing.
+             const cleanedContent = content
+                .trim()
+                .replace(/^```json\s*/, '')
+                .replace(/```$/, '');
+             return JSON.parse(cleanedContent);
         } catch (e) {
              console.error("Failed to parse content as JSON:", content);
              throw new Error("API returned content that is not valid JSON.");
@@ -115,6 +135,7 @@ export const testApiConnection = async (): Promise<string> => {
     const config = getLlmConfig();
     let responseData: any = null;
     try {
+        validateHeaders(config); // Validate before making the request
         const body: Record<string, any> = {
             model: config.modelName,
             messages: [{ role: 'user', content: 'Say "hello"' }],
@@ -172,23 +193,24 @@ export const chat = async (
     onDelta: (chunk: string) => void
 ): Promise<string | void> => {
     const config = getLlmConfig();
-    const headers = {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${config.apiKey}`,
-    };
-    
-    const body: Record<string, any> = {
-        model: config.modelName,
-        messages: messages,
-        stream: config.streamMode,
-        max_tokens: config.contextLength
-    };
-
-    if (config.thinking) {
-        body.thinking = { type: 'enabled' };
-    }
-
     try {
+        validateHeaders(config); // Validate before making the request
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${config.apiKey}`,
+        };
+        
+        const body: Record<string, any> = {
+            model: config.modelName,
+            messages: messages,
+            stream: config.streamMode,
+            max_tokens: config.contextLength
+        };
+
+        if (config.thinking) {
+            body.thinking = { type: 'enabled' };
+        }
+
         const response = await fetch(config.apiUrl, { method: 'POST', headers, body: JSON.stringify(body) });
 
         if (!response.ok) {
@@ -271,7 +293,7 @@ export const generateQAPairsFromDoc = async (docContent: string): Promise<{ ques
         },
         {
             role: 'user',
-            content: `分析以下文档，并将其中的关键信息提取为问答对。问题应该是用户可能会问的问题，答案应该简洁并直接来源于文档。请严格以JSON格式返回，格式为：{"qa_pairs": [{"question": "问题1", "answer": "答案1"}, {"question": "问题2", "answer": "答案2"}]}. 文档内容：\n\n${docContent}`
+            content: `从以下文档中，提取出5个最关键的问答对。问题应该是用户实际可能会问的问题，答案应简洁并直接来源于文档。你必须严格以JSON格式返回，并且只返回JSON对象，不包含任何解释性文字或markdown标记。JSON格式为：{"qa_pairs": [{"question": "问题1", "answer": "答案1"}, {"question": "问题2", "answer": "答案2"}, {"question": "问题3", "answer": "答案3"}, {"question": "问题4", "answer": "答案4"}, {"question": "问题5", "answer": "答案5"}]}. 文档内容如下：\n\n${docContent}`
         }
     ];
 

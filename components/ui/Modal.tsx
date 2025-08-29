@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { XIcon } from './Icons';
 
@@ -23,19 +22,22 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, footer,
     };
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50" onClick={onClose}>
-            <div className={`bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full ${sizeClasses[size]} flex flex-col`} onClick={e => e.stopPropagation()}>
-                <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4" onClick={onClose}>
+            <div 
+                className={`bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full ${sizeClasses[size]} flex flex-col max-h-[90vh]`} 
+                onClick={e => e.stopPropagation()}
+            >
+                <div className="flex-shrink-0 flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
                     <h3 className="text-lg font-semibold">{title}</h3>
                     <button onClick={onClose} className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
                         <XIcon className="w-5 h-5" />
                     </button>
                 </div>
-                <div className="p-6 overflow-y-auto">
+                <div className="flex-grow p-6 overflow-y-auto">
                     {children}
                 </div>
                 {footer && (
-                    <div className="flex justify-end p-4 border-t border-gray-200 dark:border-gray-700">
+                    <div className="flex-shrink-0 flex justify-end p-4 border-t border-gray-200 dark:border-gray-700">
                         {footer}
                     </div>
                 )}
